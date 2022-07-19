@@ -11,7 +11,7 @@ import { Sidebar } from '@components/ui'
 import { CartSidebarView } from '@components/cart'
 import { CommerceProvider } from '@lib/shopify/storefront-data-hooks'
 import shopifyConfig from '@config/shopify'
-import { builder, BuilderContent, Builder } from '@builder.io/react'
+import { builder, BuilderContent, Builder, BuilderComponent } from '@builder.io/react'
 import themesMap from '@config/theme'
 import '@builder.io/widgets'
 import 'react-spring-modal/styles.css'
@@ -25,6 +25,7 @@ const FeatureBar = dynamic(() => import('@components/common/FeatureBar'), {
 const Layout: React.FC<{ pageProps: any }> = ({ children, pageProps }) => {
   const builderTheme = pageProps.theme
   const isLive = !Builder.isEditing && !Builder.isPreviewing
+  const attributes = pageProps.attributes;
   return (
     <CommerceProvider {...shopifyConfig}>
       <BuilderContent
@@ -39,15 +40,25 @@ const Layout: React.FC<{ pageProps: any }> = ({ children, pageProps }) => {
           const siteSettings = data?.siteSettings
           const colorOverrides = data?.colorOverrides
           const siteSeoInfo = data?.siteInformation
+          const themeName = data?.theme || 'base';
+          const theme = {
+            ...themesMap[themeName],
+            colors: {
+              ...themesMap[themeName].colors,
+              ...colorOverrides,
+            },
+          }
+        
           return (
-            <ManagedUIContext key={data?.id} siteSettings={siteSettings}>
+            <ManagedUIContext key={data?.id} siteSettings={{
+              ...siteSettings,
+              attributes,
+              children
+            }}>
               <Head seoInfo={siteSeoInfo || seoConfig} />
-              <InnerLayout
-                themeName={data?.theme || 'base'}
-                colorOverrides={colorOverrides}
-              >
-                {children}
-              </InnerLayout>
+              <ThemeProvider theme={theme}>
+                <BuilderComponent content={builderTheme} model="theme"></BuilderComponent>
+              </ThemeProvider>
             </ManagedUIContext>
           )
         }}
@@ -65,18 +76,11 @@ const InnerLayout: React.FC<{
     secondary?: string
     muted?: string
   }
-}> = ({ themeName, children, colorOverrides }) => {
-  const theme = {
-    ...themesMap[themeName],
-    colors: {
-      ...themesMap[themeName].colors,
-      ...colorOverrides,
-    },
-  }
-  const { displaySidebar, closeSidebar } = useUI()
+}> = () => {
+  const { displaySidebar, closeSidebar, children } = useUI()
   const { acceptedCookies, onAcceptCookies } = useAcceptCookies()
   return (
-    <ThemeProvider theme={theme}>
+    <React.Fragment>
       <Navbar />
       <div
         sx={{
@@ -109,8 +113,13 @@ const InnerLayout: React.FC<{
           }
         />
       </NoSSR>
-    </ThemeProvider>
+    </React.Fragment>
   )
 }
+
+Builder.registerComponent(InnerLayout, {
+  name: 'InnerLayout',
+});
+
 
 export default Layout

@@ -12,6 +12,9 @@ import '../blocks/ProductGrid/ProductGrid.builder'
 import '../blocks/CollectionView/CollectionView.builder'
 import '../blocks/ProductView/ProductView.builder'
 import '../blocks/CloudinaryImage/CloudinaryImage.builder'
+import { ContextMenu } from '@builder.io/personalization-context-menu'
+import '@szhsin/react-menu/dist/index.css'
+import '@szhsin/react-menu/dist/transitions/slide.css'
 
 Builder.register('insertMenu', {
   name: 'Shopify Collections Components',
@@ -36,6 +39,12 @@ Builder.register('insertMenu', {
   items: [{ name: 'CloudinaryImage' }],
 })
 
+Builder.register('insertMenu', {
+  name: 'Site Layout',
+  items: [{ name: 'InnerLayout' }],
+})
+
+
 const Noop: FC = ({ children }) => <>{children}</>
 
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -44,6 +53,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Layout pageProps={pageProps}>
         <Component {...pageProps} />
+        <ContextMenu />
       </Layout>
     </>
   )

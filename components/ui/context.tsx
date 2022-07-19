@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react'
+import React, { FC } from 'react'
 
 export interface State {
   displaySidebar: boolean
@@ -7,6 +7,8 @@ export interface State {
   toggleSidebar?: any
   closeSidebar?: any
   openSidebar?: any
+  attributes: any;
+  children: any;
 }
 
 const initialState = {

@@ -11,38 +11,15 @@ import Image from 'next/image'
 import Searchbar from './Searchbar'
 
 const Navbar: FC = () => {
-  const [announcement, setAnnouncement] = useState()
-  const { theme } = useThemeUI()
   const { navigationLinks, logo } = useUI()
-  const cart = useCart()
-
-  useEffect(() => {
-    async function fetchContent() {
-      const items = cart?.lineItems || []
-      const anouncementContent = await builder
-        .get('announcement-bar', {
-          cacheSeconds: 120,
-          userAttributes: {
-            itemInCart: items.map((item: any) => item.variant.product.handle),
-          } as any,
-        })
-        .toPromise()
-      setAnnouncement(anouncementContent)
-    }
-    fetchContent()
-  }, [cart?.lineItems])
 
   return (
     <React.Fragment>
-      <BuilderComponent
-        content={announcement}
-        data={{ theme }}
-        model="announcement-bar"
-      />
       <Themed.div
         as="header"
         sx={{
           margin: `0 auto`,
+          width: '100%',
           maxWidth: 1920,
           py: 2,
           px: 2,
