@@ -7,8 +7,8 @@ export interface State {
   toggleSidebar?: any
   closeSidebar?: any
   openSidebar?: any
-  attributes: any;
-  children: any;
+  attributes?: any;
+  children?: any;
 }
 
 const initialState = {
