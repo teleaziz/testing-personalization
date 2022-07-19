@@ -78,10 +78,8 @@ const InnerLayout: React.FC<{
   }
 }> = () => {
   const { displaySidebar, closeSidebar, children } = useUI()
-  const { acceptedCookies, onAcceptCookies } = useAcceptCookies()
   return (
     <React.Fragment>
-      <Navbar />
       <div
         sx={{
           margin: `0 auto`,
@@ -104,22 +102,32 @@ const InnerLayout: React.FC<{
       >
         <CartSidebarView />
       </Sidebar>
-      <NoSSR>
-        <FeatureBar
-          title="This site uses cookies to improve your experience. By clicking, you agree to our Privacy Policy."
-          hide={Builder.isEditing ? true : acceptedCookies}
-          action={
-            <Button onClick={() => onAcceptCookies()}>Accept cookies</Button>
-          }
-        />
-      </NoSSR>
     </React.Fragment>
   )
 }
 
 Builder.registerComponent(InnerLayout, {
-  name: 'InnerLayout',
+  name: 'MainContent',
 });
 
+Builder.registerComponent(() => <Navbar></Navbar>, {
+  name: 'Navbar',
+})
+
+Builder.registerComponent(() => {
+  const { acceptedCookies, onAcceptCookies } = useAcceptCookies()
+  return <NoSSR>
+  <FeatureBar
+    title="This site uses cookies to improve your experience. By clicking, you agree to our Privacy Policy."
+    hide={acceptedCookies}
+    action={
+      <Button onClick={() => onAcceptCookies()}>Accept cookies</Button>
+    }
+  />
+</NoSSR>
+
+}, {
+  name: 'CookieConsent'
+})
 
 export default Layout
