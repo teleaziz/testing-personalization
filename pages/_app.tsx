@@ -15,6 +15,7 @@ import '../blocks/CloudinaryImage/CloudinaryImage.builder'
 import { ContextMenu } from '@builder.io/personalization-context-menu'
 import '@szhsin/react-menu/dist/index.css'
 import '@szhsin/react-menu/dist/transitions/slide.css'
+import "@reach/dialog/styles.css";
 
 Builder.register('insertMenu', {
   name: 'Shopify Collections Components',

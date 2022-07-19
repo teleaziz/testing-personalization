@@ -1,8 +1,11 @@
+/** @jsxRuntime classic */
+/** @jsx jsx */
 import type {
   GetStaticPathsContext,
   GetStaticPropsContext,
   InferGetStaticPropsType,
 } from 'next'
+import { Themed, jsx } from 'theme-ui'
 import { useRouter } from 'next/router'
 import { Layout } from '@components/common'
 import { BuilderComponent, Builder, builder } from '@builder.io/react'
@@ -17,7 +20,8 @@ import DefaultErrorPage from 'next/error'
 import Head from 'next/head'
 import { useThemeUI } from '@theme-ui/core'
 import { getLayoutProps } from '@lib/get-layout-props'
-
+import { CollectionPreview } from 'blocks/CollectionView/CollectionView'
+import React from 'react'
 builder.init(builderConfig.apiKey!)
 const builderModel = 'collection-page'
 
@@ -35,7 +39,6 @@ export async function getStaticProps({
   })
 
   return {
-    notFound: !page,
     props: {
       page: page || null,
       collection: collection || null,
@@ -74,13 +77,25 @@ export default function Handle({
   return router.isFallback && isLive ? (
     <h1>Loading...</h1> // TODO (BC) Add Skeleton Views
   ) : (
-    <BuilderComponent
-      isStatic
-      key={collection.id}
-      model={builderModel}
-      data={{ collection, theme }}
-      {...(page && { content: page })}
-    />
+    <Themed.div sx={{ p: 2}}>
+      <CollectionPreview collection={{collection}} productGridOptions={{
+        offset: 0,
+        limit: 10,
+        cardProps: {
+          imgHeight: 350,
+          imgWidth: 350,
+        }
+      }} renderSeo></CollectionPreview>
+      <BuilderComponent
+        isStatic
+        key={collection.id}
+        model={builderModel}
+        context={{ theme }}
+        data={{ collection, theme }}
+        {...(page && { content: page })}
+      />
+
+    </Themed.div>
   )
 }
 

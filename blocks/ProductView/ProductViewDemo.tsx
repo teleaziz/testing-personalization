@@ -18,7 +18,7 @@ interface Props {
   title?: string
 }
 
-const ProductBox: React.FC<Props> = ({
+export const ProductBox: React.FC<Props> = ({
   product,
   renderSeo = true,
   description = product.body_html,

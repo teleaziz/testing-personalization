@@ -1,3 +1,5 @@
+/** @jsxRuntime classic */
+/** @jsx jsx */
 import type {
   GetStaticPathsContext,
   GetStaticPropsContext,
@@ -14,10 +16,13 @@ import {
   getAllProductPaths,
   getProduct,
 } from '@lib/shopify/storefront-data-hooks/src/api/operations'
+import { Themed, jsx } from 'theme-ui'
 import DefaultErrorPage from 'next/error'
 import Head from 'next/head'
 import { useThemeUI } from 'theme-ui'
 import { getLayoutProps } from '@lib/get-layout-props'
+import { ProductBox } from 'blocks/ProductView/ProductView';
+import React from 'react'
 builder.init(builderConfig.apiKey!)
 
 const builderModel = 'product-page'
@@ -36,7 +41,6 @@ export async function getStaticProps({
   })
 
   return {
-    notFound: !page ,
     props: {
       page: page || null,
       product: product || null,
@@ -76,13 +80,16 @@ export default function Handle({
   return router.isFallback && isLive ? (
     <h1>Loading...</h1> // TODO (BC) Add Skeleton Views
   ) : (
-    <BuilderComponent
+    <Themed.div sx={{ p: 2}}>
+      <ProductBox product={product} renderSeo></ProductBox>
+      <BuilderComponent
       isStatic
       key={product!.id}
       model={builderModel}
       data={{ product, theme }}
       {...(page && { content: page })}
     />
+    </Themed.div>
   )
 }
 

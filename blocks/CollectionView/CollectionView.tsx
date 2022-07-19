@@ -16,7 +16,7 @@ interface Props {
   renderSeo?: boolean
 }
 
-const CollectionPreview: FC<Props> = ({
+export const CollectionPreview: FC<Props> = ({
   collection: initialCollection,
   productGridOptions,
   renderSeo,

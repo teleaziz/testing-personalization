@@ -57,7 +57,7 @@ const Layout: React.FC<{ pageProps: any }> = ({ children, pageProps }) => {
             }}>
               <Head seoInfo={siteSeoInfo || seoConfig} />
               <ThemeProvider theme={theme}>
-                <BuilderComponent content={builderTheme} model="theme"></BuilderComponent>
+                <BuilderComponent content={builderTheme} context={{ theme }} model="theme"></BuilderComponent>
               </ThemeProvider>
             </ManagedUIContext>
           )

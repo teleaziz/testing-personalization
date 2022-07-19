@@ -8,7 +8,7 @@ const regex = /^(.+\.)/
 
 const shouldRewrite = (pathname: string) => {
   // only in netlify needed
-  if (pathname.startsWith('/builder')) {
+  if (pathname.startsWith('/builder') || pathname.includes('_next/image')) {
     return false;
   }
   // do not rewrite api requests
@@ -35,9 +35,9 @@ export default function middleware(request: NextRequest) {
         return btoa(url);
       },
       attributes: {
-        ...getUserAttributes({ ...allCookies, ...query }),
-        domain: request.headers.get('Host') || '',
+        site: request.headers.get('Host') || '',
         country: request.geo?.country || '',
+        ...getUserAttributes({ ...allCookies, ...query }),
       }
     })
     url.pathname = personlizedURL.rewritePath();
