@@ -28,6 +28,8 @@ export default function middleware(request: NextRequest) {
       ...acc,
       [key]: request.cookies.get(key),
     }), {})
+    const host = request.headers.get('Host') || '';
+    const siteType = host.split('.')[1];
     const personlizedURL = new PersonalizedURL({
       pathname: usePath,
       // Buffer is not available in middleware environment as of next 12.2 , overriding with btoa
@@ -35,8 +37,9 @@ export default function middleware(request: NextRequest) {
         return btoa(url);
       },
       attributes: {
-        site: request.headers.get('Host') || '',
+        site: host,
         country: request.geo?.country || '',
+        ...siteType && { siteType },
         ...getUserAttributes({ ...allCookies, ...query }),
       }
     })
