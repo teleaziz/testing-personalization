@@ -17,6 +17,7 @@ import '@builder.io/widgets'
 import 'react-spring-modal/styles.css'
 import seoConfig from '@config/seo.json'
 import NoSSR from './NoSSR'
+import { useThemeUI } from '@theme-ui/core'
 
 const FeatureBar = dynamic(() => import('@components/common/FeatureBar'), {
   ssr: false,
@@ -24,6 +25,9 @@ const FeatureBar = dynamic(() => import('@components/common/FeatureBar'), {
 
 const Layout: React.FC<{ pageProps: any }> = ({ children, pageProps }) => {
   const builderTheme = pageProps.theme
+  const announcementBar = pageProps.announcementBar;
+  const footer = pageProps.footer;
+
   const isLive = !Builder.isEditing && !Builder.isPreviewing
   const attributes = pageProps.attributes;
   return (
@@ -41,6 +45,7 @@ const Layout: React.FC<{ pageProps: any }> = ({ children, pageProps }) => {
           const colorOverrides = data?.colorOverrides
           const siteSeoInfo = data?.siteInformation
           const themeName = data?.theme || 'base';
+          const editingModel = Builder.previewingModel || builder.editingModel;
           const theme = {
             ...themesMap[themeName],
             colors: {
@@ -53,11 +58,15 @@ const Layout: React.FC<{ pageProps: any }> = ({ children, pageProps }) => {
             <ManagedUIContext key={data?.id} siteSettings={{
               ...siteSettings,
               attributes,
-              children
+              children,
+              announcementBar,
+              footer
             }}>
               <Head seoInfo={siteSeoInfo || seoConfig} />
               <ThemeProvider theme={theme}>
+                { editingModel === 'announcement-bar' && <AnnouncementBar forceShow />}
                 <BuilderComponent content={builderTheme} context={{ theme }} model="theme"></BuilderComponent>
+                { editingModel === 'footer' && <Footer forceShow />}
               </ThemeProvider>
             </ManagedUIContext>
           )
@@ -129,5 +138,34 @@ Builder.registerComponent(() => {
 }, {
   name: 'CookieConsent'
 })
+
+const AnnouncementBar = ({ forceShow} : any) => {
+  const { announcementBar } = useUI()
+  const model = Builder.previewingModel || builder.editingModel;
+  const theme = useThemeUI();
+  if (model === 'announcement-bar' && !forceShow)  {
+    return null
+  }
+  return <BuilderComponent content={announcementBar} model="announcement-bar" data={{theme}}></BuilderComponent>
+};
+
+Builder.registerComponent(AnnouncementBar, {
+  name: 'AnnouncementBar'
+})
+
+const Footer = ({ forceShow }: any) => {
+  const { footer } = useUI()
+  const theme = useThemeUI();
+  const model = Builder.previewingModel || builder.editingModel;
+  if (model === 'footer' && !forceShow)  {
+    return null
+  }
+  return <BuilderComponent content={footer} model="footer" data={{theme}}></BuilderComponent>
+};
+
+Builder.registerComponent(Footer, {
+  name: 'Footer'
+})
+
 
 export default Layout

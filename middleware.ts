@@ -8,7 +8,7 @@ const regex = /^(.+\.)/
 
 const shouldRewrite = (pathname: string) => {
   // only in netlify needed
-  if (pathname.startsWith('/builder') || pathname.includes('_next/image')) {
+  if (pathname.startsWith('/builder') || pathname.includes('_next/image') || pathname.startsWith('/preview')) {
     return false;
   }
   // do not rewrite api requests

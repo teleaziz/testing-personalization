@@ -42,7 +42,7 @@ Builder.register('insertMenu', {
 
 Builder.register('insertMenu', {
   name: 'Site Layout',
-  items: [{ name: 'MainContent' }, { name: 'CookieConsent'}, { name: 'Navbar'}],
+  items: [{ name: 'MainContent' }, { name: 'CookieConsent'}, { name: 'Navbar'}, { name: 'AnnouncementBar'}, { name: 'Footer'}],
 })
 
 

@@ -9,6 +9,8 @@ export interface State {
   openSidebar?: any
   attributes?: any;
   children?: any;
+  announcementBar?: any;
+  footer?: any;
 }
 
 const initialState = {
