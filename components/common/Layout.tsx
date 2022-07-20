@@ -18,6 +18,13 @@ import 'react-spring-modal/styles.css'
 import seoConfig from '@config/seo.json'
 import NoSSR from './NoSSR'
 import { useThemeUI } from '@theme-ui/core'
+if (!Builder.isBrowser) {
+  try {
+    require('vm2')
+  } catch (e) {
+    console.log('no vm2')
+  }
+}
 
 const FeatureBar = dynamic(() => import('@components/common/FeatureBar'), {
   ssr: false,
@@ -117,6 +124,7 @@ const InnerLayout: React.FC<{
 
 Builder.registerComponent(InnerLayout, {
   name: 'MainContent',
+  image: 'https://visualpharm.com/assets/831/Page%20Overview%203-595b40b85ba036ed117da78c.svg'
 });
 
 Builder.registerComponent(() => <Navbar></Navbar>, {
@@ -136,6 +144,7 @@ Builder.registerComponent(() => {
 </NoSSR>
 
 }, {
+  image: 'https://visualpharm.com/assets/702/Cookies-595b40b65ba036ed117d398e.svg',
   name: 'CookieConsent'
 })
 
@@ -150,7 +159,8 @@ const AnnouncementBar = ({ forceShow} : any) => {
 };
 
 Builder.registerComponent(AnnouncementBar, {
-  name: 'AnnouncementBar'
+  name: 'AnnouncementBar',
+  image: 'https://visualpharm.com/assets/834/Megaphone-595b40b65ba036ed117d14d6.svg',
 })
 
 const Footer = ({ forceShow }: any) => {
@@ -164,7 +174,8 @@ const Footer = ({ forceShow }: any) => {
 };
 
 Builder.registerComponent(Footer, {
-  name: 'Footer'
+  name: 'Footer',
+  image: 'https://visualpharm.com/assets/682/Tail%20Of%20Whale-595b40b85ba036ed117da474.svg',
 })
 
 
