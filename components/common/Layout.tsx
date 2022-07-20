@@ -34,8 +34,9 @@ const Layout: React.FC<{ pageProps: any }> = ({ children, pageProps }) => {
   const builderTheme = pageProps.theme
   const announcementBar = pageProps.announcementBar;
   const footer = pageProps.footer;
+  const editingModel = Builder.previewingModel || builder.editingModel;
 
-  const isLive = !Builder.isEditing && !Builder.isPreviewing
+  const isLive = editingModel !== 'theme';
   const attributes = pageProps.attributes;
   return (
     <CommerceProvider {...shopifyConfig}>
@@ -52,7 +53,6 @@ const Layout: React.FC<{ pageProps: any }> = ({ children, pageProps }) => {
           const colorOverrides = data?.colorOverrides
           const siteSeoInfo = data?.siteInformation
           const themeName = data?.theme || 'base';
-          const editingModel = Builder.previewingModel || builder.editingModel;
           const theme = {
             ...themesMap[themeName],
             colors: {
@@ -72,7 +72,7 @@ const Layout: React.FC<{ pageProps: any }> = ({ children, pageProps }) => {
               <Head seoInfo={siteSeoInfo || seoConfig} />
               <ThemeProvider theme={theme}>
                 { editingModel === 'announcement-bar' && <AnnouncementBar forceShow />}
-                <BuilderComponent content={builderTheme} context={{ theme }} model="theme"></BuilderComponent>
+                <BuilderComponent {...isLive && {content: builderTheme}} context={{ theme }} model="theme"></BuilderComponent>
                 { editingModel === 'footer' && <Footer forceShow />}
               </ThemeProvider>
             </ManagedUIContext>
