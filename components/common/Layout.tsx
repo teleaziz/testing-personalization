@@ -18,6 +18,7 @@ import 'react-spring-modal/styles.css'
 import seoConfig from '@config/seo.json'
 import NoSSR from './NoSSR'
 import { useThemeUI } from '@theme-ui/core'
+
 if (!Builder.isBrowser) {
   try {
     require('vm2')

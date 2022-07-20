@@ -1,10 +1,11 @@
-const bundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: !!process.env.BUNDLE_ANALYZE,
-})
 
-module.exports = bundleAnalyzer({
+module.exports = {
   images: {
     domains: ['res.cloudinary.com', 'cdn.shopify.com', 'cdn.builder.io', 'via.placeholder.com'],
+  },
+  webpack: (config) => {
+    config.externals = (config.externals || []).concat('vm2').concat('fs');
+    return config;
   },
   async headers() {
     return [
@@ -35,4 +36,4 @@ module.exports = bundleAnalyzer({
     // a non-locale prefixed path e.g. `/hello`
     defaultLocale: 'en-US',
   },
-})
+}
