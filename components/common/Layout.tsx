@@ -30,7 +30,7 @@ const FeatureBar = dynamic(() => import('@components/common/FeatureBar'), {
   ssr: false,
 })
 
-const Layout: React.FC<{ pageProps: any }> = ({ children, pageProps }) => {
+const Layout: React.FC<{ pageProps: any, children: any }> = ({ children, pageProps }) => {
   const builderTheme = pageProps.theme
   const announcementBar = pageProps.announcementBar;
   const footer = pageProps.footer;

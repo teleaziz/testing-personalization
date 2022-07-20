@@ -47,7 +47,7 @@ Builder.register('insertMenu', {
 
 
 
-const Noop: FC = ({ children }) => <>{children}</>
+const Noop: FC<{ children: any}> = ({ children }) => <>{children}</>
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const Layout = (Component as any).Layout || Noop

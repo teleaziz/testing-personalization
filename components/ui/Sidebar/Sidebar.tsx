@@ -8,6 +8,7 @@ import { BaseModal, ModalCloseTarget } from 'react-spring-modal'
 interface Props {
   open: boolean
   onClose: () => void
+  children: any
 }
 
 const Sidebar: FC<Props> = ({ children, open = false, onClose }) => {

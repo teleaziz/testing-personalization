@@ -7,6 +7,7 @@ import { Button, jsx } from 'theme-ui'
 
 interface Props {
   className?: string
+  children?: any;
 }
 
 const UserNav: FC<Props> = ({ className, children, ...props }) => {
