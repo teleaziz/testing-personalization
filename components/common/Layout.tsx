@@ -124,11 +124,12 @@ const InnerLayout: React.FC<{
 
 Builder.registerComponent(InnerLayout, {
   name: 'MainContent',
-  image: 'https://visualpharm.com/assets/831/Page%20Overview%203-595b40b85ba036ed117da78c.svg'
+  image: 'https://visualpharm.com/assets/936/Page%20Overview%204-595b40b75ba036ed117d9a2a.svg'
 });
 
 Builder.registerComponent(() => <Navbar></Navbar>, {
   name: 'Navbar',
+  image: 'https://visualpharm.com/assets/565/Document%20Header-595b40b75ba036ed117d5c62.svg'
 })
 
 Builder.registerComponent(() => {
@@ -144,7 +145,7 @@ Builder.registerComponent(() => {
 </NoSSR>
 
 }, {
-  image: 'https://visualpharm.com/assets/702/Cookies-595b40b65ba036ed117d398e.svg',
+  image: 'https://visualpharm.com/assets/700/Cookies-595b40b85ba036ed117dcdb9.svg',
   name: 'CookieConsent'
 })
 
@@ -160,7 +161,7 @@ const AnnouncementBar = ({ forceShow} : any) => {
 
 Builder.registerComponent(AnnouncementBar, {
   name: 'AnnouncementBar',
-  image: 'https://visualpharm.com/assets/834/Megaphone-595b40b65ba036ed117d14d6.svg',
+  image: 'https://visualpharm.com/assets/468/Megaphone-595b40b65ba036ed117d482b.svg',
 })
 
 const Footer = ({ forceShow }: any) => {
@@ -175,7 +176,7 @@ const Footer = ({ forceShow }: any) => {
 
 Builder.registerComponent(Footer, {
   name: 'Footer',
-  image: 'https://visualpharm.com/assets/682/Tail%20Of%20Whale-595b40b85ba036ed117da474.svg',
+  image: 'https://visualpharm.com/assets/680/Footer-595b40b75ba036ed117d5c60.svg',
 })
 
 

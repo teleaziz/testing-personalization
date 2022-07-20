@@ -18,6 +18,11 @@ import '@szhsin/react-menu/dist/transitions/slide.css'
 import "@reach/dialog/styles.css";
 
 Builder.register('insertMenu', {
+  name: 'Site Layout',
+  items: [{ name: 'MainContent' }, { name: 'CookieConsent'}, { name: 'Navbar'}, { name: 'AnnouncementBar'}, { name: 'Footer'}],
+})
+
+Builder.register('insertMenu', {
   name: 'Shopify Collections Components',
   items: [
     { name: 'CollectionBox', label: 'Collection stuff' },
@@ -40,10 +45,6 @@ Builder.register('insertMenu', {
   items: [{ name: 'CloudinaryImage' }],
 })
 
-Builder.register('insertMenu', {
-  name: 'Site Layout',
-  items: [{ name: 'MainContent' }, { name: 'CookieConsent'}, { name: 'Navbar'}, { name: 'AnnouncementBar'}, { name: 'Footer'}],
-})
 
 
 const Noop: FC = ({ children }) => <>{children}</>
