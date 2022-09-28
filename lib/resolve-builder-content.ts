@@ -17,6 +17,7 @@ export async function resolveBuilderContent(
       userAttributes: targetingAttributes,
       includeRefs: true,
       cachebust: true,
+      locale: targetingAttributes?.locale || 'en-US'
     } as any)
     .toPromise()
 

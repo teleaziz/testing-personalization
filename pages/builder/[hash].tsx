@@ -25,9 +25,11 @@ import { useEffect } from 'react'
 
 builder.init(builderConfig.apiKey)
 
-  export async function getStaticProps({ params } : GetStaticPropsContext<{ hash: string }>) {
+  export async function getStaticProps({ params, locale } : GetStaticPropsContext<{ hash: string }>) {
     const personlizedURL = PersonalizedURL.fromRewrite(params!.hash!);
     const attributes = personlizedURL.options.attributes;
+    attributes.locale = locale!;
+    console.log(' attributes ', attributes);
     const page = await resolveBuilderContent('page', attributes)
   
     return {
@@ -55,6 +57,7 @@ builder.init(builderConfig.apiKey)
   export default function Path({
     page,
     attributes,
+    locale
   }: InferGetStaticPropsType<typeof getStaticProps>) {
     const router = useRouter()
     const { theme } = useThemeUI()
@@ -94,11 +97,13 @@ builder.init(builderConfig.apiKey)
             }}
           />
 
+    console.log(' here locale is ', locale)
     return (
       <div>
         { head }
         { (page || isPreviewing) ? <BuilderComponent
           options={{ includeRefs: true }}
+          locale={locale}
           model="page"
           data={{ theme, attributes }}
           context={{

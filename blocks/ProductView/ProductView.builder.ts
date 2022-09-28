@@ -47,6 +47,7 @@ restrictedRegister(
       {
         name: 'title',
         type: 'text',
+        localized: true,
         helperText: 'Override product title from shopify',
       },
     ],
