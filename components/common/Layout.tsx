@@ -74,6 +74,7 @@ const Layout: React.FC<{ pageProps: any, children: any }> = ({ children, pagePro
                 { editingModel === 'announcement-bar' && <AnnouncementBar forceShow />}
                 <BuilderComponent {...isLive && {content: builderTheme}} context={{ theme }} model="theme"></BuilderComponent>
                 { editingModel === 'footer' && <Footer forceShow />}
+                <ManagedSideBar editingModel={editingModel} />
               </ThemeProvider>
             </ManagedUIContext>
           )
@@ -81,6 +82,20 @@ const Layout: React.FC<{ pageProps: any, children: any }> = ({ children, pagePro
       </BuilderContent>
     </CommerceProvider>
   )
+}
+
+const ManagedSideBar: any = ( {editingModel}) => {
+    const { displaySidebar, closeSidebar } = useUI()
+  return (<Sidebar
+    open={
+      displaySidebar ||
+      editingModel ===
+        'cart-upsell-sidebar'
+    }
+    onClose={closeSidebar}
+  >
+    <CartSidebarView />
+  </Sidebar>)
 }
 
 const InnerLayout: React.FC<{
@@ -93,9 +108,8 @@ const InnerLayout: React.FC<{
     muted?: string
   }
 }> = () => {
-  const { displaySidebar, closeSidebar, children } = useUI()
+  const { children } = useUI()
   return (
-    <React.Fragment>
       <div
         sx={{
           margin: `0 auto`,
@@ -107,18 +121,6 @@ const InnerLayout: React.FC<{
       >
         <main>{children}</main>
       </div>
-
-      <Sidebar
-        open={
-          displaySidebar ||
-          (builder.editingModel || Builder.previewingModel) ===
-            'cart-upsell-sidebar'
-        }
-        onClose={closeSidebar}
-      >
-        <CartSidebarView />
-      </Sidebar>
-    </React.Fragment>
   )
 }
 
