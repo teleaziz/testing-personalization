@@ -84,7 +84,7 @@ const Layout: React.FC<{ pageProps: any, children: any }> = ({ children, pagePro
   )
 }
 
-const ManagedSideBar: React.FC<{editingModel: string}> = ( {editingModel}) => {
+const ManagedSideBar: React.FC<{editingModel: string | null }> = ( {editingModel}) => {
     const { displaySidebar, closeSidebar } = useUI()
   return (<Sidebar
     open={
